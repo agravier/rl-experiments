@@ -18,24 +18,31 @@ class KArmed(object):
 		
     @property
     def k(self) -> int:
+        """The number of levers"""
         return self._k
         
     @property
-    def means(self):
+    def means(self) -> Tuple[float]:
+        """The true means of all levers' underlying
+        Gaussian RV"""
         return self._means
     
     def pull_lever(self, i: int) -> float:
+        """Draw from lever i"""
         return self._rng.gauss(self._means[i], 1)
 
 
 if __name__ == '__main__':
     print('Running self-tests')
     BANDIT = KArmed(3)
+    
     assert BANDIT.k == 3
+    
     SAMPLE_MEANS = tuple(
         sum(BANDIT.pull_lever(i) for _ in range(1000)) /1000
             for i in range(BANDIT.k))
     assert all(abs(BANDIT.means[j]-SAMPLE_MEANS[j])<0.5
         for j in range(BANDIT.k))
+        
     print('OK')
     
