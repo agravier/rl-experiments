@@ -82,15 +82,15 @@ class EpsilonKArmedLearner:
         else:
             idx = -1
         q_a, a = self._estimates[idx]
-        reward = self.bandit.pull_lever[a]
+        reward = self.bandit.pull_lever(a)
         self.actions_count[a] += 1
         delta = reward - q_a
-        new_q_a = q_a + self.alpha(self.actions_count[a]) * delta
+        new_q_a = q_a + self.alpha(a) * delta
         self._estimates[idx] = new_q_a, a
         self._estimates.sort()
         return reward
 
     @property
-    def estimates(self) -> List[int]:
+    def estimates(self) -> List[float]:
         by_idx = sorted(self._estimates, key=itemgetter(1))
         return [v for v, _ in by_idx]
