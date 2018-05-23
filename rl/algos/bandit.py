@@ -1,5 +1,3 @@
-#pylint:disable=E0611
-#pylint:disable=C0411
 """This module implements action-value methods
 for non-associative settings such as k-armed bandit
 problems: epsilon-greedy with sample average or
@@ -7,14 +5,22 @@ exponential recency-weighted average, or any arbirary
 step size function."""
 import random
 import sys
-import bisect
 from operator import itemgetter
 from typing import Callable, Union, List, Tuple
-from types import MethodType
 from collections import  Counter
+from typing_extensions import Protocol
 from rl.world.bandits import KArmed
 
+
 _IndexedEstimate = Tuple[float, int]
+
+
+class KArmedLearner(Protocol):
+    """Protocol for k-armed RL algos"""
+    def step(self) -> Tuple[int, float]: ...
+    @property
+    def estimates(self) -> List[float]: ...
+
 
 class EpsilonKArmedLearner:
     """Epsilon-greedy k-armed bandit solver with action
@@ -71,7 +77,7 @@ class EpsilonKArmedLearner:
         assert n > 0, 'Step size is undefined for actions that were never taken'
         return self._alpha(n)  # type: ignore
     
-    def step(self) -> float:
+    def step(self) -> Tuple[int, float]:
         """Take an exploit/explore decision with the probability
         to explore determined by epsilon. Update the
         estimated value of the selected action, moving it
@@ -85,10 +91,11 @@ class EpsilonKArmedLearner:
         reward = self.bandit.pull_lever(a)
         self.actions_count[a] += 1
         delta = reward - q_a
-        new_q_a = q_a + self.alpha(a) * delta
+        alpha = self.alpha(a)
+        new_q_a = q_a + alpha * delta
         self._estimates[idx] = new_q_a, a
         self._estimates.sort()
-        return reward
+        return a, reward
 
     @property
     def estimates(self) -> List[float]:

@@ -4,14 +4,13 @@ import random
 import sys
 from typing_extensions import Protocol
 
+
 class KArmed(Protocol):
     """Interface for k-armed bandit problems"""
     @property
     def k(self) -> int: ...
-        
     @property
     def means(self) -> Tuple[float]: ...
-    
     def pull_lever(self, i: int) -> float: ...
 
 

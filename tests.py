@@ -24,6 +24,8 @@ def test_EpsilonKArmedLearner():
         alpha=lambda n: 1/n)
     assert learner.epsilon == 0.1
     print(learner.step())
+    print(learner.step())
+    print(learner.step())
 
 if __name__ == '__main__':
     print('Checking types')
