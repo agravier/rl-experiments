@@ -17,6 +17,7 @@ _IndexedEstimate = Tuple[float, int]
 
 class KArmedLearner(Protocol):
     """Protocol for k-armed RL algos"""
+    bandit: KArmed
     def step(self) -> Tuple[int, float]: ...
     @property
     def estimates(self) -> List[float]: ...
