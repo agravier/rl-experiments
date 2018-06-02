@@ -1,5 +1,4 @@
 from typing import Dict, Any
-from typing_extensions import Protocol
 
 import matplotlib
 matplotlib.use('module://kivymatplot.backend_kivy')
@@ -22,10 +21,6 @@ import matplotlib.pyplot as plt
 from matplotlib import cm
 from mpl_toolkits.mplot3d import Axes3D
 
-class KArmedViewer(Protocol):
-    def open(self): ...
-    def close(self): ...
-    def update(self, state: Dict[str, Any]): ...
 
 class KivyMplKArmedViewer(App):
     title = 'K-Armed Bandit Experiment Viewer'
@@ -33,7 +28,7 @@ class KivyMplKArmedViewer(App):
     def build(self):
         fl = BoxLayout(orientation="vertical")
         a = Button(
-            text="press me", height=150, size_hint_y=None)
+            text="Close", height=150, size_hint_y=None)
         a.bind(on_press=self._callback)
         fl.add_widget(self.fig.canvas)
         fl.add_widget(a)
