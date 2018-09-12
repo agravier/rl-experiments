@@ -1,22 +1,22 @@
 def check_types():
     from mypy import api
-    res = api.run(['rl'])
+    res = api.run(['--ignore-missing-imports','rl'])
     print('\n'.join(res[:-1]))
 
 def test_StationaryKArmed():
-    from rl.world.bandits import StationaryKArmed
+    from rl.world.bandit import StationaryKArmed
     bandit = StationaryKArmed(3)
     assert bandit.k == 3
     
     sample_means = tuple(
-        sum(bandit.pull_lever(i) for _ in range(1000)) /1000
+        sum(bandit.pull_lever(i) for _ in range(1000)) / 1000
             for i in range(bandit.k))
     assert all(abs(bandit.means[j]-sample_means[j])<0.5
         for j in range(bandit.k))
 
 def test_EpsilonKArmedLearner():
     from rl.algos.bandit import EpsilonKArmedLearner
-    from rl.world.bandits import StationaryKArmed
+    from rl.world.bandit import StationaryKArmed
     bandit = StationaryKArmed(3)
     learner = EpsilonKArmedLearner(
         bandit=bandit,

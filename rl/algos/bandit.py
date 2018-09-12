@@ -9,7 +9,7 @@ from operator import itemgetter
 from typing import Callable, Union, List, Tuple
 from collections import  Counter
 from typing_extensions import Protocol
-from rl.world.bandits import KArmed
+from rl.world.bandit import KArmed
 
 
 _IndexedEstimate = Tuple[float, int]

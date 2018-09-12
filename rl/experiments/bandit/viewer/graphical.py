@@ -1,5 +1,7 @@
 from typing import Dict, Any
 
+# TODO: use https://github.com/kivy/kivy/pull/5241
+
 import matplotlib
 matplotlib.use('module://kivymatplot.backend_kivy')
 from matplotlib.figure import Figure
