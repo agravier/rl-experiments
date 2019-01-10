@@ -64,3 +64,9 @@ with kivy as follows:
 
 I am currently trying out some approaches in 
 [kivy_mpl_test.py](rl/experiments/kivy_mpl_test.py).
+
+## References
+
+- [Introduction To RL by Barto and Sutton, Second edition](http://incompleteideas.net/book/the-book-2nd.html)
+- [Reddit Thread about Kivy](https://www.reddit.com/r/Python/comments/9fqh7y/my_experience_with_kivy_so_far_2_weeks_in/)
+- [Trio documentation](https://trio.readthedocs.io/en/latest/)
